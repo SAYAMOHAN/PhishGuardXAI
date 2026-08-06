@@ -71,6 +71,17 @@ features = [
 X = df[features]
 y = df["Label"]
 
+import os
+
+os.makedirs("datasets/processed", exist_ok=True)
+
+df.to_csv(
+    "datasets/processed/processed_phishing_urls.csv",
+    index=False
+)
+
+print("Processed dataset saved")
+
 
 # 6. Split data
 
