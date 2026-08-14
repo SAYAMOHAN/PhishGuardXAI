@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - About Project & Architecture</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>PhishGuard <span>AI</span></h2>
+                    <p>Cybersecurity Engine</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="about.html">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <div class="status-info">
+                        <span class="status-title">Engine Status</span>
+                        <span class="status-value">Online & Ready</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search logs, domains, IP addresses...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="notification-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Security Analyst</span>
+                            <span class="user-role">Final Year Project</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="content-wrapper">
+                
+                <!-- Page Title -->
+                <div class="page-title-section">
+                    <div class="title-left">
+                        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+                        <h1>About PhishGuard AI Project</h1>
+                    </div>
+                </div>
+
+                <!-- Hero Overview Banner -->
+                <section class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>AI-Based Real-Time Phishing Website Detection Using Ensemble Learning</h1>
+                        <p>An advanced cybersecurity solution combining gradient boosted decision trees, natural language transformers, graph embeddings, and Explainable AI (SHAP XAI) for real-time threat mitigation.</p>
+                    </div>
+                    <div class="engine-badge">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Final Year Engineering Project</span>
+                    </div>
+                </section>
+
+                <!-- System Architecture Pipeline Card -->
+                <div class="grid-card">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-diagram-project"></i> System Architecture & Pipeline Workflow</h3>
+                        <span class="version-tag">Multi-Stage Inspection</span>
+                    </div>
+                    
+                    <div class="architecture-flow-grid">
+                        
+                        <!-- Flow Step 1 -->
+                        <div class="flow-card">
+                            <div class="flow-icon step-1">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <h4>1. Input Web URL</h4>
+                            <p>Intercepts suspicious website link from Web Dashboard or Browser Background Extension.</p>
+                        </div>
+
+                        <!-- Flow Step 2 -->
+                        <div class="flow-card">
+                            <div class="flow-icon step-2">
+                                <i class="fa-solid fa-filter"></i>
+                            </div>
+                            <h4>2. Feature Extractor</h4>
+                            <p>Extracts 30+ lexical metrics, domain length, SSL certificates, WHOIS age, and DNS MX records.</p>
+                        </div>
+
+                        <!-- Flow Step 3 -->
+                        <div class="flow-card">
+                            <div class="flow-icon step-3">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h4>3. Ensemble AI Engine</h4>
+                            <p>Runs LightGBM tabular booster, BERT NLP semantic tokenizer, and GNN graph structure embeddings.</p>
+                        </div>
+
+                        <!-- Flow Step 4 -->
+                        <div class="flow-card">
+                            <div class="flow-icon step-4">
+                                <i class="fa-solid fa-chart-bar"></i>
+                            </div>
+                            <h4>4. SHAP XAI Diagnostics</h4>
+                            <p>Calculates feature importance attributions to explain WHY the website was flagged.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Project Highlights & Key Features Grid -->
+                <div class="dashboard-grid">
+                    
+                    <!-- Core Features Card -->
+                    <div class="grid-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-star"></i> Key Novelties & System Modules</h3>
+                        </div>
+
+                        <div class="features-list-box">
+                            <div class="feature-bullet">
+                                <div class="f-icon"><i class="fa-solid fa-bolt"></i></div>
+                                <div class="f-text">
+                                    <h4>Real-Time Machine Learning Inference</h4>
+                                    <p>Evaluates web links in under 50 milliseconds using optimized LightGBM gradient decision trees.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-bullet">
+                                <div class="f-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                                <div class="f-text">
+                                    <h4>Explainable AI (SHAP XAI)</h4>
+                                    <p>Eliminates black-box ML ambiguity by visualizing exact feature contribution scores for cybersecurity analysts.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-bullet">
+                                <div class="f-icon"><i class="fa-solid fa-database"></i></div>
+                                <div class="f-text">
+                                    <h4>SQLite Historical Database</h4>
+                                    <p>Persists scan history logs, risk scores, domain metadata, and SHAP JSON structures for auditability.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-bullet">
+                                <div class="f-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                <div class="f-text">
+                                    <h4>Background Protection Extension</h4>
+                                    <p>Manifest V3 browser background listener providing passive real-time link protection.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Metadata & Credits Card -->
+                    <div class="grid-card-column">
+                        
+                        <div class="grid-card project-meta-card">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-laptop-code"></i> Project Information</h3>
+                            </div>
+
+                            <ul class="info-list">
+                                <li>
+                                    <span class="info-label">Project Title:</span>
+                                    <span class="info-val">AI-Based Phishing Detection</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Domain:</span>
+                                    <span class="info-val">Cybersecurity & Machine Learning</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">ML Models:</span>
+                                    <span class="info-val">LightGBM, BERT, GNN</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Explainability:</span>
+                                    <span class="info-val">SHAP (SHapley Additive exPlanations)</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Frontend Stack:</span>
+                                    <span class="info-val">HTML5, CSS3, Vanilla JS</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Backend Framework:</span>
+                                    <span class="info-val">Python Flask REST API</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Database:</span>
+                                    <span class="info-val">SQLite 3</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

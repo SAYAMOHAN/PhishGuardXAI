@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - Real-Time Phishing Detection System</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>PhishGuard <span>AI</span></h2>
+                    <p>Cybersecurity Engine</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <div class="status-info">
+                        <span class="status-title">Engine Status</span>
+                        <span class="status-value">Online & Ready</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search logs, domains, IP addresses...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="notification-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Security Analyst</span>
+                            <span class="user-role">Final Year Project</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="content-wrapper">
+                
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>AI-Based Real-Time Phishing Detection</h1>
+                        <p>Analyze URLs instantly using Multi-Layered Machine Learning & Deep Neural Networks (LightGBM, BERT, GNN & Ensemble Classifier).</p>
+                    </div>
+                    <div class="engine-badge">
+                        <i class="fa-solid fa-microchip"></i>
+                        <span>Ensemble Architecture v1.0</span>
+                    </div>
+                </section>
+
+                <!-- URL Scanner Card -->
+                <section class="scanner-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-magnifying-glass-location"></i> Scan Website URL</h2>
+                        <span class="pulse-tag"><i class="fa-solid fa-bolt"></i> Real-time AI Analysis</span>
+                    </div>
+                    
+                    <form id="urlScanForm" class="scan-form" action="result.html" method="GET">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <input 
+                                type="url" 
+                                id="urlInput" 
+                                name="url" 
+                                placeholder="Enter suspicious website URL (e.g., https://example-bank-login.com)" 
+                                required 
+                                autocomplete="off"
+                            >
+                            <button type="submit" id="scanBtn" class="btn-scan">
+                                <span class="btn-text">Scan Website</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Loading State Overlay (Initially Hidden, toggled via JS) -->
+                    <div id="scanLoader" class="scan-loader hidden">
+                        <div class="spinner-ring"></div>
+                        <div class="loader-text">
+                            <h4>Analyzing URL with AI Models...</h4>
+                            <p id="loaderStep">Extracting lexical and structural features...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Key Statistics Grid -->
+                <section class="stats-grid">
+                    
+                    <!-- Card 1: Total Scans -->
+                    <div class="stat-card">
+                        <div class="stat-icon total-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Total Scans</h3>
+                            <div class="stat-number" id="statsTotal">0</div>
+                            <span class="stat-trend positive">
+                                <i class="fa-solid fa-arrow-up"></i> Live Tracking
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Safe Websites -->
+                    <div class="stat-card">
+                        <div class="stat-icon safe-icon">
+                            <i class="fa-solid fa-shield-check"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Safe Websites</h3>
+                            <div class="stat-number" id="statsSafe">0</div>
+                            <span class="stat-percentage">0.0% verified safe</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Phishing Detected -->
+                    <div class="stat-card">
+                        <div class="stat-icon danger-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Phishing Detected</h3>
+                            <div class="stat-number" id="statsPhishing">0</div>
+                            <span class="stat-trend negative">
+                                <i class="fa-solid fa-shield-cat"></i> 0.0% threats blocked
+                            </span>
+                        </div>
+                    </div>
+                    
+                </section>
+
+                <!-- Dual Column Dashboard Grid -->
+                <div class="dashboard-grid">
+                    
+                    <!-- Recent Scan History -->
+                    <div class="grid-card recent-scans-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-list-check"></i> Recent Scan History</h3>
+                            <a href="history.html" class="view-all-link">View All History <i class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Target Website</th>
+                                        <th>Date & Time</th>
+                                        <th>Risk Score</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                                            No recent scans found. Enter a URL above to analyze your first website.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- AI Detection Engine Architecture Card -->
+                    <div class="grid-card ai-engine-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-brain"></i> AI Detection Engine Pipelines</h3>
+                            <span class="version-tag">Multi-Model Ensemble</span>
+                        </div>
+                        <p class="pipeline-description">Real-time multi-stage inspection pipeline evaluating domain signals, NLP representations, and structural web graphs.</p>
+                        
+                        <div class="engine-pipelines-list">
+                            
+                            <!-- Step 1 -->
+                            <div class="pipeline-item ready">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">URL Feature Extraction</span>
+                                    <span class="pipeline-sub">30+ Lexical & Structural Metrics</span>
+                                </div>
+                                <span class="tag-active">Active</span>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="pipeline-item ready">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">SSL Certificate Inspector</span>
+                                    <span class="pipeline-sub">Issuer & Validity Check</span>
+                                </div>
+                                <span class="tag-active">Active</span>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="pipeline-item ready">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">WHOIS Lookup Protocol</span>
+                                    <span class="pipeline-sub">Domain Age & Registration Data</span>
+                                </div>
+                                <span class="tag-active">Active</span>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="pipeline-item ready">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">DNS & MX Record Analysis</span>
+                                    <span class="pipeline-sub">A, AAAA, MX Record Verification</span>
+                                </div>
+                                <span class="tag-active">Active</span>
+                            </div>
+
+                            <!-- Step 5 -->
+                            <div class="pipeline-item model-item">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-bolt text-blue"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">BERT Deep NLP Model</span>
+                                    <span class="pipeline-sub">Contextual Semantic Tokenizer</span>
+                                </div>
+                                <span class="tag-model">Deep Learning</span>
+                            </div>
+
+                            <!-- Step 6 -->
+                            <div class="pipeline-item model-item">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-tree text-green"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">LightGBM Gradient Booster</span>
+                                    <span class="pipeline-sub">Tabular Feature Classification</span>
+                                </div>
+                                <span class="tag-model">ML Engine</span>
+                            </div>
+
+                            <!-- Step 7 -->
+                            <div class="pipeline-item model-item">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-diagram-project text-purple"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">Graph Neural Network (GNN)</span>
+                                    <span class="pipeline-sub">DOM Graph Structure Embeddings</span>
+                                </div>
+                                <span class="tag-model">Neural Graph</span>
+                            </div>
+
+                            <!-- Step 8 -->
+                            <div class="pipeline-item highlight">
+                                <div class="pipeline-status">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div class="pipeline-details">
+                                    <span class="pipeline-name">Ensemble Voting Classifier</span>
+                                    <span class="pipeline-sub">Weighted Stacking Consensus</span>
+                                </div>
+                                <span class="tag-primary">Final Output</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

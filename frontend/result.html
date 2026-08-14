@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - Scan Analysis Report</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>PhishGuard <span>AI</span></h2>
+                    <p>Cybersecurity Engine</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <div class="status-info">
+                        <span class="status-title">Engine Status</span>
+                        <span class="status-value">Online & Ready</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search logs, domains, IP addresses...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="notification-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Security Analyst</span>
+                            <span class="user-role">Final Year Project</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="content-wrapper">
+                
+                <!-- Result Page Navigation & Quick Actions -->
+                <div class="page-title-section">
+                    <div class="title-left">
+                        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+                        <h1>Phishing Analysis Report</h1>
+                    </div>
+                    <div class="title-right">
+                        <a href="index.html" class="btn-scan-another">
+                            <i class="fa-solid fa-rotate-left"></i> Scan Another URL
+                        </a>
+                        <button class="btn-secondary" onclick="window.print()">
+                            <i class="fa-solid fa-print"></i> Print Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Target URL & Classification Hero Card -->
+                <section class="result-hero-card threat-detected">
+                    <div class="hero-header">
+                        <div class="url-display-box">
+                            <span class="url-label"><i class="fa-solid fa-link"></i> Target Website URL</span>
+                            <h2 id="scannedUrl" class="scanned-url-text">http://secure-paypal-verify-login.com/account/login</h2>
+                        </div>
+                        
+                        <!-- Prediction Badge (Dynamic: Safe or Phishing) -->
+                        <div class="prediction-badge-container">
+                            <div id="verdictBadge" class="verdict-badge phishing-badge">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                <span>PHISHING DETECTED</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Grid: Risk Score, Confidence, Model Consensus -->
+                    <div class="metrics-grid">
+                        
+                        <!-- Metric 1: Risk Score Gauge -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span>Overall Risk Score</span>
+                                <i class="fa-solid fa-gauge-high text-danger"></i>
+                            </div>
+                            <div class="score-display">
+                                <span id="riskScoreVal" class="score-value text-danger">96.4%</span>
+                                <span class="score-sub">High Severity Threat</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar risk-bg-high" style="width: 96.4%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Metric 2: AI Model Confidence Score -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span>Model Confidence Score</span>
+                                <i class="fa-solid fa-bullseye text-blue"></i>
+                            </div>
+                            <div class="score-display">
+                                <span id="confidenceVal" class="score-value">98.8%</span>
+                                <span class="score-sub">Ensemble Consensus</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar confidence-bg" style="width: 98.8%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Metric 3: Model Voting Consensus -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span>Ensemble Voting</span>
+                                <i class="fa-solid fa-diagram-project text-purple"></i>
+                            </div>
+                            <div class="score-display">
+                                <span class="score-value">3 / 3 Models</span>
+                                <span class="score-sub">LightGBM, BERT & GNN Agree</span>
+                            </div>
+                            <div class="model-votes-pills">
+                                <span class="vote-tag danger">LightGBM: 97%</span>
+                                <span class="vote-tag danger">BERT: 95%</span>
+                                <span class="vote-tag danger">GNN: 97%</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Dual Column Layout: Feature Breakdown & SHAP Explanation -->
+                <div class="dashboard-grid">
+                    
+                    <!-- Column 1: Reasons for Prediction & Feature Analysis -->
+                    <div class="grid-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-list-check"></i> Key Risk Indicators & Reasons</h3>
+                            <span class="version-tag">AI Diagnostics</span>
+                        </div>
+                        
+                        <!-- List of Reasons (Dynamically Populated via JS) -->
+                        <ul class="reasons-list" id="reasonsList">
+                            <li class="reason-item danger">
+                                <i class="fa-solid fa-circle-xmark"></i>
+                                <div class="reason-content">
+                                    <h4>Typosquatting & Brand Impersonation</h4>
+                                    <p>URL contains keywords mimicking "paypal" on an untrusted domain name.</p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!-- Feature Breakdown Table -->
+                        <div class="feature-analysis-section">
+                            <h4 class="sub-heading"><i class="fa-solid fa-microchip"></i> Extracted Feature Analysis</h4>
+                            <div class="table-responsive">
+                                <table class="data-table" id="featureTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Feature Metric</th>
+                                            <th>Extracted Value</th>
+                                            <th>Safety Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="featureTableBody">
+                                        <!-- Dynamically populated via JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: SHAP Explanation & Recommended Actions -->
+                    <div class="grid-card-column">
+                        
+                        <!-- SHAP Model Interpretability Card -->
+                        <div class="grid-card shap-card">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-chart-bar"></i> SHAP Explainable AI (XAI)</h3>
+                                <span class="tag-model">Model Interpretability</span>
+                            </div>
+                            <p class="pipeline-description">SHAP (SHapley Additive exPlanations) visualizes how each feature contributes to the final phishing risk score.</p>
+                            
+                            <!-- SHAP Bar Chart Container (Dynamically Populated via JS) -->
+                            <div class="shap-chart-container" id="shapChartContainer">
+                                <!-- Dynamically populated via JS -->
+                            </div>
+                            
+                            <div class="shap-footer-note">
+                                <i class="fa-solid fa-circle-info"></i> Positive SHAP values push prediction towards <strong>Phishing</strong>.
+                            </div>
+                        </div>
+
+                        <!-- Recommendations Card -->
+                        <div class="grid-card recommendation-card">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-user-shield"></i> Security Recommendations</h3>
+                            </div>
+                            
+                            <div id="recommendationsBox" class="recommendations-box danger-box">
+                                <div class="rec-icon">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                                <div class="rec-details" id="recDetails">
+                                    <h4>DO NOT Visit or Submit Credentials</h4>
+                                    <p>This URL displays strong indicators of credential harvesting and identity theft.</p>
+                                </div>
+                            </div>
+
+                            <ul class="rec-steps" id="recSteps">
+                                <li><i class="fa-solid fa-check text-blue"></i> Close any open tabs attempting to reach this domain.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

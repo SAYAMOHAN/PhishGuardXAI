@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - System Settings & Project Info</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>PhishGuard <span>AI</span></h2>
+                    <p>Cybersecurity Engine</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reports">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="settings.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <div class="status-info">
+                        <span class="status-title">Engine Status</span>
+                        <span class="status-value">Online & Ready</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search logs, domains, IP addresses...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="notification-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Security Analyst</span>
+                            <span class="user-role">Final Year Project</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="content-wrapper">
+                
+                <!-- Page Title -->
+                <div class="page-title-section">
+                    <div class="title-left">
+                        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+                        <h1>System Settings & Preferences</h1>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    
+                    <!-- Column 1: System Preferences Form -->
+                    <div class="grid-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-sliders"></i> Interface & Inspection Preferences</h3>
+                        </div>
+
+                        <form id="settingsForm" class="settings-form">
+                            
+                            <!-- Setting 1: Dark Mode Toggle -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4><i class="fa-solid fa-moon"></i> Dark Mode Theme</h4>
+                                    <p>Switch dashboard visual theme between Light and Dark Navy mode.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="darkModeToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <!-- Setting 2: Real-time Notifications Toggle -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4><i class="fa-solid fa-bell"></i> Real-Time Threat Alerts</h4>
+                                    <p>Display immediate popups when high-risk phishing links are scanned.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="notificationsToggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <!-- Setting 3: Language Selection -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4><i class="fa-solid fa-language"></i> System Language</h4>
+                                    <p>Select preferred language for reports and AI diagnostic labels.</p>
+                                </div>
+                                <select id="languageSelect" class="form-select">
+                                    <option value="en" selected>English (US)</option>
+                                    <option value="es">Spanish (Español)</option>
+                                    <option value="fr">French (Français)</option>
+                                    <option value="de">German (Deutsch)</option>
+                                    <option value="hi">Hindi (हिंदी)</option>
+                                </select>
+                            </div>
+
+                            <!-- Setting 4: Backend API Server Endpoint -->
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4><i class="fa-solid fa-server"></i> Flask ML Backend API Host</h4>
+                                    <p>Target REST endpoint server for real-time model inference.</p>
+                                </div>
+                                <input type="text" id="apiEndpointInput" class="form-text-input" value="http://127.0.0.1:5000/api/scan">
+                            </div>
+
+                            <!-- Action Button -->
+                            <div class="form-actions">
+                                <button type="submit" class="btn-scan">
+                                    <i class="fa-solid fa-floppy-disk"></i> Save Settings
+                                </button>
+                                <span id="saveStatus" class="save-status-msg hidden">
+                                    <i class="fa-solid fa-circle-check text-success"></i> Settings saved successfully!
+                                </span>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <!-- Column 2: About Project & Architecture Specifications -->
+                    <div class="grid-card-column">
+                        
+                        <!-- About Project Card -->
+                        <div class="grid-card about-project-card">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-graduation-cap"></i> About Final Year Project</h3>
+                                <span class="version-tag">v1.0.0</span>
+                            </div>
+
+                            <div class="project-details-box">
+                                <h4>AI-Based Real-Time Phishing Website Detection Using Ensemble Learning</h4>
+                                <p class="project-desc">
+                                    An end-to-end intelligent cybersecurity framework designed to inspect malicious web domains in real time using multi-layered machine learning, deep learning semantic representations, and explainable AI (XAI).
+                                </p>
+
+                                <div class="tech-stack-badges">
+                                    <span class="tech-badge"><i class="fa-brands fa-python"></i> Python Flask</span>
+                                    <span class="tech-badge"><i class="fa-solid fa-tree"></i> LightGBM Engine</span>
+                                    <span class="tech-badge"><i class="fa-solid fa-bolt"></i> BERT Model</span>
+                                    <span class="tech-badge"><i class="fa-solid fa-diagram-project"></i> GNN Embeddings</span>
+                                    <span class="tech-badge"><i class="fa-solid fa-chart-line"></i> SHAP XAI</span>
+                                    <span class="tech-badge"><i class="fa-solid fa-database"></i> SQLite DB</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Specs Card -->
+                        <div class="grid-card system-info-card">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-circle-info"></i> Version & Engine Information</h3>
+                            </div>
+
+                            <ul class="info-list">
+                                <li>
+                                    <span class="info-label">Application Name:</span>
+                                    <span class="info-val">PhishGuard AI</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Project Type:</span>
+                                    <span class="info-val">Final Year Engineering Project</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">System Version:</span>
+                                    <span class="info-val">v1.0.0 (Initial Release)</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Ensemble Model:</span>
+                                    <span class="info-val">LightGBM + BERT + GNN</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Explainable AI Framework:</span>
+                                    <span class="info-val">SHAP (SHapley Additive exPlanations)</span>
+                                </li>
+                                <li>
+                                    <span class="info-label">Database Storage:</span>
+                                    <span class="info-val">SQLite 3 (scan_history.db)</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>
