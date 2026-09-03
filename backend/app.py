@@ -1,74 +1,49 @@
-from flask import Flask, request, jsonify
-from database import save_scan, get_history
+from flask import Flask, jsonify
+
+from routes.prediction import prediction_bp
+from routes.history import history_bp
+from routes.stats import stats_bp
+from routes.recent_phishing import recent_phishing_bp
+from routes.report import report_bp
+from routes.reports import reports_bp
+
 
 app = Flask(__name__)
 
 
+# --------------------------------------------------
+# Home
+# --------------------------------------------------
+
 @app.route("/")
 def home():
+
     return jsonify({
         "message": "PhishGuardAI backend is running"
     })
 
 
-@app.route("/predict", methods=["POST"])
-def predict():
-    data = request.get_json()
+# --------------------------------------------------
+# Register Routes
+# --------------------------------------------------
 
-    url = data.get("url")
+app.register_blueprint(prediction_bp)
 
-    if not url:
-        return jsonify({
-            "error": "URL is required"
-        }), 400
+app.register_blueprint(history_bp)
 
-    # Temporary test prediction
-    prediction = "SAFE"
-    probability = 0.05
-    confidence = 95.0
-    risk_score = 5
-    risk_level = "LOW"
+app.register_blueprint(stats_bp)
 
-    scan_id = save_scan(
-        url=url,
-        prediction=prediction,
-        probability=probability,
-        confidence=confidence,
-        risk_score=risk_score,
-        risk_level=risk_level
-    )
+app.register_blueprint(recent_phishing_bp)
 
-    return jsonify({
-        "scan_id": scan_id,
-        "url": url,
-        "prediction": prediction,
-        "probability": probability,
-        "confidence": confidence,
-        "risk_score": risk_score,
-        "risk_level": risk_level
-    })
+app.register_blueprint(report_bp)
+
+app.register_blueprint(reports_bp)
 
 
-@app.route("/history", methods=["GET"])
-def history():
-    rows = get_history()
-
-    history_data = []
-
-    for row in rows:
-        history_data.append({
-            "id": row[0],
-            "url": row[1],
-            "prediction": row[2],
-            "probability": float(row[3]) if row[3] is not None else None,
-            "confidence": float(row[4]) if row[4] is not None else None,
-            "risk_score": row[5],
-            "risk_level": row[6],
-            "scan_time": row[7].isoformat() if row[7] else None
-        })
-
-    return jsonify(history_data)
-
+# --------------------------------------------------
+# Run Server
+# --------------------------------------------------
 
 if __name__ == "__main__":
+
     app.run(debug=True)
