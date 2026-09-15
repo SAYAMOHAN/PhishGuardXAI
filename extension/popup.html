@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI Toolbar</title>
+    <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="popup-container">
+        <!-- Header -->
+        <div class="popup-header">
+            <div class="brand">
+                <span class="shield-icon">🛡️</span>
+                <div>
+                    <div class="brand-title">PhishGuard AI</div>
+                    <div class="brand-sub">Real-Time Web Protection</div>
+                </div>
+            </div>
+            <span class="live-dot" title="Active Real-time Protection"></span>
+        </div>
+
+        <!-- Current URL Display -->
+        <div class="url-card">
+            <div class="url-label">CURRENT TAB</div>
+            <div class="url-text" id="current-url">Loading domain...</div>
+        </div>
+
+        <!-- Security Verdict Badge -->
+        <div class="verdict-card safe" id="verdict-card">
+            <div class="verdict-badge" id="verdict-badge">🛡️ SAFE</div>
+            <div class="verdict-title" id="verdict-title">Analyzing web page...</div>
+            <div class="verdict-subtitle" id="verdict-sub">Multi-model ensemble evaluation running</div>
+        </div>
+
+        <!-- Scores & Risk Bar -->
+        <div class="scores-grid">
+            <div class="score-box">
+                <div class="score-name">BERT</div>
+                <div class="score-val" id="score-bert">--%</div>
+            </div>
+            <div class="score-box">
+                <div class="score-name">GNN</div>
+                <div class="score-val" id="score-gnn">--%</div>
+            </div>
+            <div class="score-box">
+                <div class="score-name">LightGBM</div>
+                <div class="score-val" id="score-lgb">--%</div>
+            </div>
+        </div>
+
+        <!-- Adaptive Risk Meter -->
+        <div class="risk-section">
+            <div class="risk-header">
+                <span>Adaptive Risk Score</span>
+                <span id="risk-score-val">0 / 100</span>
+            </div>
+            <div class="risk-bar-container">
+                <div class="risk-bar-fill" id="risk-bar-fill" style="width: 0%;"></div>
+            </div>
+            <div class="mdi-indicator" id="mdi-indicator">
+                Model Disagreement Index (MDI): <strong id="mdi-val">0.00</strong>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions-row">
+            <button class="btn btn-primary" id="btn-recheck">⚡ Rescan Tab</button>
+            <button class="btn btn-secondary" id="btn-dashboard">📊 Open Dashboard</button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

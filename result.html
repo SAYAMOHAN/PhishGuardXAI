@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - Scan Analysis Report</title>
+    
+    <!-- Google Fonts: Poppins & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>PhishGuard <span>AI</span></h2>
+                    <p>Cybersecurity Engine</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <div class="status-info">
+                        <span class="status-title">Engine Status</span>
+                        <span class="status-value">Online & Ready</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search logs, domains, IP addresses...">
+                </div>
+                
+                <div class="header-actions">
+                    <!-- Gamification XP & Level Pill -->
+                    <div class="gamified-header-pill">
+                        <div class="level-badge">
+                            <i class="fa-solid fa-shield-cat"></i> Lvl <span id="userLevelVal">2</span>
+                        </div>
+                        <div class="xp-container">
+                            <div class="xp-label">
+                                <span>ANALYST XP</span>
+                                <span id="userXpText">20/100 XP</span>
+                            </div>
+                            <div class="xp-bar-outer">
+                                <div id="userXpBar" class="xp-bar-inner" style="width: 20%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dual Theme Mode Toggle Button (Dark / Light) -->
+                    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Dual Theme Mode (Dark / Light Cyber)">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <!-- Cyber Audio Toggle Button -->
+                    <button id="soundToggleBtn" class="sound-toggle-btn" title="Toggle Futuristic Audio FX">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+
+                    <button class="notification-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Security Analyst</span>
+                            <span class="user-role">Final Year Project</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="content-wrapper">
+                
+                <!-- Result Page Navigation & Quick Actions -->
+                <div class="page-title-section">
+                    <div class="title-left">
+                        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+                        <h1>Phishing Analysis Report</h1>
+                    </div>
+                    <div class="title-right">
+                        <a href="index.html" class="btn-scan-another">
+                            <i class="fa-solid fa-rotate-left"></i> Scan Another URL
+                        </a>
+                        <button class="btn-secondary" onclick="window.print()">
+                            <i class="fa-solid fa-print"></i> Print Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PREVIOUS REPORT SELECTOR BAR ON REPORT PAGE -->
+                <div class="previous-reports-bar margin-bottom-20">
+                    <div class="prev-reports-title">
+                        <i class="fa-solid fa-clock-rotate-left text-blue"></i>
+                        <span>Switch Analysis Report:</span>
+                    </div>
+                    <select id="resultPrevReportsSelect" class="prev-reports-dropdown">
+                        <option value="">-- Load a previous scan report --</option>
+                    </select>
+                </div>
+
+                <!-- XP Earned Reward Banner -->
+                <div class="xp-reward-banner">
+                    <div class="xp-reward-title">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Analysis Complete! Security XP awarded for multi-layer inspection.</span>
+                    </div>
+                    <span class="xp-reward-badge">+25 XP Awarded</span>
+                </div>
+
+                <!-- Target URL & Classification Hero Card -->
+                <section class="result-hero-card threat-detected">
+                    <div class="hero-header">
+                        <div class="url-display-box">
+                            <span class="url-label"><i class="fa-solid fa-link"></i> Target Website URL</span>
+                            <h2 id="scannedUrl" class="scanned-url-text">Loading URL...</h2>
+                        </div>
+                        
+                        <!-- Prediction Badge (Dynamic: Safe, Suspicious, High Risk, Phishing) -->
+                        <div class="prediction-badge-container">
+                            <div id="verdictBadge" class="verdict-badge safe-badge">
+                                <i class="fa-solid fa-shield-check"></i>
+                                <span>ANALYZING URL...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Grid: Risk Score, Confidence, Model Disagreement Index (MDI) -->
+                    <div class="metrics-grid">
+                        
+                        <!-- Metric 1: Risk Score Gauge -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span>Adaptive Risk Score (PRS)</span>
+                                <i class="fa-solid fa-gauge-high text-danger"></i>
+                            </div>
+                            <div class="score-display">
+                                <span id="riskScoreVal" class="score-value text-danger">0.0/100</span>
+                                <span class="score-sub" id="riskSubText">Evaluating Risk</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div id="riskProgressBar" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Metric 2: AI Model Confidence Score -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span>Model Confidence Score</span>
+                                <i class="fa-solid fa-bullseye text-blue"></i>
+                            </div>
+                            <div class="score-display">
+                                <span id="confidenceVal" class="score-value">0.0%</span>
+                                <span class="score-sub">Statistical Confidence</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div id="confidenceProgressBar" class="progress-bar confidence-bg" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Metric 3: Model Disagreement Index (MDI) -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <span>Model Disagreement (MDI)</span>
+                                <i class="fa-solid fa-calculator text-purple"></i>
+                            </div>
+                            <div class="score-display">
+                                <span id="mdiVal" class="score-value">0.000</span>
+                                <span class="score-sub" id="mdiSub">Std(P_BERT, P_GNN, P_LightGBM)</span>
+                            </div>
+                            <div class="model-votes-pills">
+                                <span id="mdiStatusPill" class="mdi-badge mdi-low">Calculating Consensus</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Section: Individual Model Predictions (BERT, GNN, LightGBM) -->
+                <section class="grid-card">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-layer-group"></i> Multi-Model Prediction Breakdown</h3>
+                        <span class="version-tag">BERT + GNN + LightGBM</span>
+                    </div>
+                    <p class="pipeline-description">Individual probabilities generated by deep NLP semantic analysis, structural DOM graph neural networks, and tabular gradient boosting trees.</p>
+                    
+                    <div class="models-grid-3col">
+                        <!-- Model 1: BERT NLP -->
+                        <div class="model-card-item">
+                            <div class="model-card-header">
+                                <div class="model-card-title">
+                                    <i class="fa-solid fa-font text-blue"></i>
+                                    <span>BERT Deep NLP</span>
+                                </div>
+                                <span class="model-type-tag tag-nlp">Semantic Model</span>
+                            </div>
+                            <div class="model-prob-display">
+                                <span id="bertProbVal" class="model-prob-val">--%</span>
+                                <span id="bertPredPill" class="model-pred-pill badge-safe">--</span>
+                            </div>
+                            <div class="model-progress-bar">
+                                <div id="bertProgressFill" class="model-progress-fill fill-bert" style="width: 0%;"></div>
+                            </div>
+                            <div class="model-details-box">
+                                <strong>Tokens Analyzed:</strong> <code id="bertTokenSnippet">[CLS] domain [SEP] auth</code>
+                            </div>
+                        </div>
+
+                        <!-- Model 2: GNN Neural Graph -->
+                        <div class="model-card-item">
+                            <div class="model-card-header">
+                                <div class="model-card-title">
+                                    <i class="fa-solid fa-diagram-project text-purple"></i>
+                                    <span>Graph Neural Net (GNN)</span>
+                                </div>
+                                <span class="model-type-tag tag-gnn">DOM Graph</span>
+                            </div>
+                            <div class="model-prob-display">
+                                <span id="gnnProbVal" class="model-prob-val">--%</span>
+                                <span id="gnnPredPill" class="model-pred-pill badge-safe">--</span>
+                            </div>
+                            <div class="model-progress-bar">
+                                <div id="gnnProgressFill" class="model-progress-fill fill-gnn" style="width: 0%;"></div>
+                            </div>
+                            <div class="model-details-box">
+                                <strong>Graph Embedding:</strong> <span id="gnnNodeCount">124 DOM Nodes, 3 Edge Anomaly Flags</span>
+                            </div>
+                        </div>
+
+                        <!-- Model 3: LightGBM Booster -->
+                        <div class="model-card-item">
+                            <div class="model-card-header">
+                                <div class="model-card-title">
+                                    <i class="fa-solid fa-tree text-green"></i>
+                                    <span>LightGBM Classifier</span>
+                                </div>
+                                <span class="model-type-tag tag-lgb">Tabular ML</span>
+                            </div>
+                            <div class="model-prob-display">
+                                <span id="lgbProbVal" class="model-prob-val">--%</span>
+                                <span id="lgbPredPill" class="model-pred-pill badge-safe">--</span>
+                            </div>
+                            <div class="model-progress-bar">
+                                <div id="lgbProgressFill" class="model-progress-fill fill-lgb" style="width: 0%;"></div>
+                            </div>
+                            <div class="model-details-box">
+                                <strong>Top Feature Split:</strong> <span id="lgbSplitText">Hyphen Count & Keyword Density</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Threat Intelligence -->
+                <section class="grid-card">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-shield-virus"></i> Threat Intelligence Signals</h3>
+                        <span class="version-tag">OSINT Verification</span>
+                    </div>
+                    <p class="pipeline-description">Real-time domain registration age, SSL certificate validity, WHOIS privacy status, and blacklist lookup.</p>
+                    
+                    <div class="threat-intel-grid">
+                        <div class="intel-item-card">
+                            <i class="fa-solid fa-calendar-days intel-icon"></i>
+                            <div class="intel-info">
+                                <span class="intel-label">Domain Age</span>
+                                <span id="intelDomainAge" class="intel-val">--</span>
+                            </div>
+                        </div>
+
+                        <div class="intel-item-card">
+                            <i class="fa-solid fa-lock intel-icon"></i>
+                            <div class="intel-info">
+                                <span class="intel-label">SSL Certificate</span>
+                                <span id="intelSslStatus" class="intel-val">--</span>
+                            </div>
+                        </div>
+
+                        <div class="intel-item-card">
+                            <i class="fa-solid fa-address-card intel-icon"></i>
+                            <div class="intel-info">
+                                <span class="intel-label">WHOIS Record</span>
+                                <span id="intelWhoisStatus" class="intel-val">--</span>
+                            </div>
+                        </div>
+
+                        <div class="intel-item-card">
+                            <i class="fa-solid fa-network-wired intel-icon"></i>
+                            <div class="intel-info">
+                                <span class="intel-label">DNS Routing</span>
+                                <span id="intelDnsStatus" class="intel-val">--</span>
+                            </div>
+                        </div>
+
+                        <div class="intel-item-card">
+                            <i class="fa-solid fa-user-ninja intel-icon"></i>
+                            <div class="intel-info">
+                                <span class="intel-label">Domain Reputation</span>
+                                <span id="intelReputation" class="intel-val">--</span>
+                            </div>
+                        </div>
+
+                        <div class="intel-item-card">
+                            <i class="fa-solid fa-ban intel-icon"></i>
+                            <div class="intel-info">
+                                <span class="intel-label">Blacklist Feeds</span>
+                                <span id="intelBlacklist" class="intel-val">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Explainable AI (SHAP) & Reasons -->
+                <div class="dashboard-grid">
+                    <!-- Key Risk Factors -->
+                    <div class="grid-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-list-check"></i> Key Diagnostic Risk Signals</h3>
+                        </div>
+                        <ul id="reasonsList" class="reasons-list">
+                            <li class="reason-item">
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                <div class="reason-content">
+                                    <h4>Analyzing URL Signals...</h4>
+                                    <p>Evaluating multi-layer model risk factors.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Explainable AI (SHAP) Chart -->
+                    <div class="grid-card">
+                        <div class="card-title-bar">
+                            <h3><i class="fa-solid fa-chart-bar"></i> Explainable AI (SHAP Contributions)</h3>
+                            <span class="tag-model">Feature Evidence</span>
+                        </div>
+                        <p class="pipeline-description">SHAP values indicating individual feature positive (red) and negative (green) contributions.</p>
+                        
+                        <div id="shapChartContainer" class="shap-chart-container">
+                            <div class="shap-bar-item">
+                                <span class="shap-label">Calculating SHAP feature evidence...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Feature Extraction Table -->
+                <section class="grid-card margin-top-20">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-table-list"></i> Extracted Feature Vector (30+ Metrics)</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature Name</th>
+                                    <th>Extracted Value</th>
+                                    <th>Feature Risk Assessment</th>
+                                </tr>
+                            </thead>
+                            <tbody id="featureTableBody">
+                                <tr>
+                                    <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 20px;">
+                                        Loading feature vector...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Section: Actionable Security Recommendations -->
+                <section id="recommendationsBox" class="grid-card margin-top-20">
+                    <div class="card-title-bar">
+                        <h3><i class="fa-solid fa-shield-cat"></i> Security Recommendations</h3>
+                    </div>
+                    <div id="recDetails" class="rec-details">
+                        <h4>Evaluating Security Recommendations...</h4>
+                    </div>
+                    <ul id="recSteps" class="rec-steps" style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                        <li><i class="fa-solid fa-circle-notch fa-spin"></i> Loading security advice...</li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

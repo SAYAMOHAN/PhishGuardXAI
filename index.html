@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard AI - Dual-Mode Real-Time Phishing Detection</title>
+    
+    <!-- Google Fonts: Poppins & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>PhishGuard <span>AI</span></h2>
+                    <p>Cybersecurity Engine</p>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="history.html">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="about.html">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <div class="status-info">
+                        <span class="status-title">Engine Status</span>
+                        <span class="status-value">Online & Ready</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search logs, domains, IP addresses...">
+                </div>
+                
+                <div class="header-actions">
+                    <!-- Gamification XP & Level Pill -->
+                    <div class="gamified-header-pill">
+                        <div class="level-badge">
+                            <i class="fa-solid fa-shield-cat"></i> Lvl <span id="userLevelVal">2</span>
+                        </div>
+                        <div class="xp-container">
+                            <div class="xp-label">
+                                <span>ANALYST XP</span>
+                                <span id="userXpText">20/100 XP</span>
+                            </div>
+                            <div class="xp-bar-outer">
+                                <div id="userXpBar" class="xp-bar-inner" style="width: 20%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dual Theme Mode Toggle Button (Dark / Light) -->
+                    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Dual Theme Mode (Dark / Light Cyber)">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <!-- Cyber Audio Toggle Button -->
+                    <button id="soundToggleBtn" class="sound-toggle-btn" title="Toggle Futuristic Audio FX">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+
+                    <button class="notification-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Security Analyst</span>
+                            <span class="user-role">Final Year Project</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="content-wrapper">
+                
+                <!-- Welcome & Gamified Analyst Rank Section -->
+                <section class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>Dual-Mode Real-Time Phishing Detection</h1>
+                        <p>Perform manual website classification or experience live in-browser pop verification powered by BERT, GNN, LightGBM & Adaptive Risk Assessment.</p>
+                    </div>
+
+                    <!-- Gamified Analyst Rank Card -->
+                    <div class="analyst-rank-card">
+                        <div class="rank-avatar-box">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="rank-info">
+                            <div class="rank-title">
+                                <span id="analystRankTitle">Level 2: Threat Hunter</span>
+                                <span class="streak-pill"><i class="fa-solid fa-fire"></i> <span id="analystStreakVal">3 Days</span></span>
+                            </div>
+                            <div class="achievements-row">
+                                <div class="achievement-icon-tag" title="First Scan Completed"><i class="fa-solid fa-bullseye"></i></div>
+                                <div class="achievement-icon-tag" title="Phishing Threat Blocked"><i class="fa-solid fa-shield-cat"></i></div>
+                                <div class="achievement-icon-tag" title="XAI Specialist"><i class="fa-solid fa-brain"></i></div>
+                                <div class="achievement-icon-tag locked" title="Locked: Level 5 Reached"><i class="fa-solid fa-lock"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DUAL MODE SWITCHER BAR -->
+                <div class="mode-switcher-bar">
+                    <button id="modeManualBtn" class="mode-tab-btn active">
+                        <i class="fa-solid fa-desktop"></i> Mode 1: Manual Classification & Deep Analytics
+                    </button>
+                    <button id="modeRealtimeBtn" class="mode-tab-btn">
+                        <i class="fa-solid fa-window-restore"></i> Mode 2: Real-Time In-Browser Pop Verification
+                    </button>
+                    <button id="extensionModalBtn" class="extension-guide-btn">
+                        <i class="fa-brands fa-chrome"></i> Install Chrome/Edge Extension
+                    </button>
+                </div>
+
+                <!-- ================= MODE 1: MANUAL CLASSIFICATION CONTAINER ================= -->
+                <div id="mode1Container" class="mode-container active">
+                    
+                    <!-- URL Scanner Card -->
+                    <section class="scanner-card">
+                        <div class="card-header">
+                            <h2><i class="fa-solid fa-magnifying-glass-location"></i> Manual Website URL Scanner</h2>
+                            <span class="pulse-tag"><i class="fa-solid fa-bolt"></i> Real-time AI Analysis</span>
+                        </div>
+                        
+                        <form id="urlScanForm" class="scan-form" action="result.html" method="GET">
+                            <div class="input-group">
+                                <div class="input-icon">
+                                    <i class="fa-solid fa-globe"></i>
+                                </div>
+                                <input 
+                                    type="text" 
+                                    id="urlInput" 
+                                    name="url" 
+                                    placeholder="Enter domain or URL (e.g. google.com, github.com, paypal-security-update.com)" 
+                                    required 
+                                    autocomplete="off"
+                                >
+                                <button type="submit" id="scanBtn" class="btn-scan">
+                                    <span class="btn-text">Scan Website</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Previous Analysis Reports Quick Selector Bar -->
+                        <div class="previous-reports-bar">
+                            <div class="prev-reports-title">
+                                <i class="fa-solid fa-folder-open text-blue"></i>
+                                <span>Previous Analysis Reports (Manual Mode):</span>
+                            </div>
+                            <select id="prevReportsSelect" class="prev-reports-dropdown">
+                                <option value="">-- Select a previous scan report to view details --</option>
+                            </select>
+                            <button id="loadPrevReportBtn" class="btn-load-report">
+                                <i class="fa-solid fa-file-contract"></i> View Selected Report
+                            </button>
+                        </div>
+
+                        <!-- Interactive Animated Cyber Radar Scanning Overlay -->
+                        <div id="scanLoader" class="cyber-radar-overlay hidden">
+                            <div class="radar-circle-container">
+                                <div class="radar-grid-line h"></div>
+                                <div class="radar-grid-line v"></div>
+                                <div class="radar-inner-ring"></div>
+                                <div class="radar-sweep-beam"></div>
+                                <div class="radar-target-dot dot-1"></div>
+                                <div class="radar-target-dot dot-2"></div>
+                            </div>
+                            <div class="radar-readout-text">
+                                <h4>MULTI-LAYER AI SCAN IN PROGRESS</h4>
+                                <p id="loaderStep">1/7 Extracting 30+ lexical & structural URL features...</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Key Statistics Grid -->
+                    <section class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon total-icon">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Total Scans</h3>
+                                <div class="stat-number" id="statsTotal">0</div>
+                                <span class="stat-trend positive">
+                                    <i class="fa-solid fa-arrow-up"></i> Live Tracking
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon safe-icon">
+                                <i class="fa-solid fa-shield-check"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Safe Websites</h3>
+                                <div class="stat-number" id="statsSafe">0</div>
+                                <span class="stat-percentage">0.0% verified safe</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon danger-icon">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h3>Phishing Detected</h3>
+                                <div class="stat-number" id="statsPhishing">0</div>
+                                <span class="stat-trend negative">
+                                    <i class="fa-solid fa-shield-cat"></i> 0.0% threats blocked
+                                </span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Dual Column Dashboard Grid -->
+                    <div class="dashboard-grid">
+                        <!-- Recent Scan History -->
+                        <div class="grid-card recent-scans-card">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-list-check"></i> Recent Manual Scan Reports Log</h3>
+                                <a href="history.html" class="view-all-link">View All History <i class="fa-solid fa-chevron-right"></i></a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Target Website</th>
+                                            <th>Date & Time</th>
+                                            <th>Risk Score</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 24px;">
+                                                No recent scans found. Enter a URL above to analyze your first website.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- AI Detection Engine Architecture Card -->
+                        <div class="grid-card ai-engine-card">
+                            <div class="card-title-bar">
+                                <h3><i class="fa-solid fa-brain"></i> AI Detection Engine Pipelines</h3>
+                                <span class="version-tag">Multi-Model Ensemble</span>
+                            </div>
+                            <p class="pipeline-description">Real-time multi-stage inspection pipeline evaluating domain signals, NLP representations, and structural web graphs.</p>
+                            
+                            <div class="engine-pipelines-list">
+                                <div class="pipeline-item ready">
+                                    <div class="pipeline-status"><i class="fa-solid fa-circle-check"></i></div>
+                                    <div class="pipeline-details">
+                                        <span class="pipeline-name">1. Multi-Level Feature Analysis</span>
+                                        <span class="pipeline-sub">30+ Lexical & Structural Metrics</span>
+                                    </div>
+                                    <span class="tag-active">Active</span>
+                                </div>
+
+                                <div class="pipeline-item model-item">
+                                    <div class="pipeline-status"><i class="fa-solid fa-font text-blue"></i></div>
+                                    <div class="pipeline-details">
+                                        <span class="pipeline-name">2. BERT Deep NLP Model</span>
+                                        <span class="pipeline-sub">Contextual Semantic Tokenizer</span>
+                                    </div>
+                                    <span class="tag-model">Deep NLP</span>
+                                </div>
+
+                                <div class="pipeline-item model-item">
+                                    <div class="pipeline-status"><i class="fa-solid fa-diagram-project text-purple"></i></div>
+                                    <div class="pipeline-details">
+                                        <span class="pipeline-name">3. Graph Neural Network (GNN)</span>
+                                        <span class="pipeline-sub">DOM Graph Structure Embeddings</span>
+                                    </div>
+                                    <span class="tag-model">DOM Graph</span>
+                                </div>
+
+                                <div class="pipeline-item model-item">
+                                    <div class="pipeline-status"><i class="fa-solid fa-tree text-green"></i></div>
+                                    <div class="pipeline-details">
+                                        <span class="pipeline-name">4. LightGBM Classifier</span>
+                                        <span class="pipeline-sub">Tabular Gradient Boosting</span>
+                                    </div>
+                                    <span class="tag-model">ML Booster</span>
+                                </div>
+
+                                <div class="pipeline-item ready">
+                                    <div class="pipeline-status"><i class="fa-solid fa-chart-bar text-warning"></i></div>
+                                    <div class="pipeline-details">
+                                        <span class="pipeline-name">5. Explainable AI (SHAP)</span>
+                                        <span class="pipeline-sub">Feature Contribution & Evidence</span>
+                                    </div>
+                                    <span class="tag-active">Active</span>
+                                </div>
+
+                                <div class="pipeline-item ready">
+                                    <div class="pipeline-status"><i class="fa-solid fa-shield-virus text-blue"></i></div>
+                                    <div class="pipeline-details">
+                                        <span class="pipeline-name">6. Threat Intelligence Signals</span>
+                                        <span class="pipeline-sub">Domain Age, SSL, WHOIS, DNS & Blacklists</span>
+                                    </div>
+                                    <span class="tag-active">Active</span>
+                                </div>
+
+                                <div class="pipeline-item highlight">
+                                    <div class="pipeline-status"><i class="fa-solid fa-scale-balanced"></i></div>
+                                    <div class="pipeline-details">
+                                        <span class="pipeline-name">7. Adaptive Risk Assessment</span>
+                                        <span class="pipeline-sub">Model Disagreement (MDI) + Weighted PRS</span>
+                                    </div>
+                                    <span class="tag-primary">Research Extension</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ================= MODE 2: REAL-TIME BROWSER POP VERIFICATION SIMULATOR ================= -->
+                <div id="mode2Container" class="mode-container hidden">
+                    <div class="simulator-intro-card">
+                        <div class="sim-title">
+                            <i class="fa-solid fa-eye"></i> Real-Time In-Browser Pop Verification Simulator
+                        </div>
+                        <p>Simulate how PhishGuard AI runs silently in any browser window in the background. As you navigate to any website URL below (with or without http/https), background analysis executes instantly and injects an active pop-up verification badge directly on the visited page!</p>
+                        
+                        <!-- Test link quick chips -->
+                        <div class="test-links-chips">
+                            <span>Test URLs:</span>
+                            <button class="sim-chip phishing" data-url="paypal-security-login-update.com">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Phishing: PayPal Fake
+                            </button>
+                            <button class="sim-chip phishing" data-url="free-crypto-giveaway-claim.net">
+                                <i class="fa-solid fa-vault"></i> Phishing: Crypto Scam
+                            </button>
+                            <button class="sim-chip safe" data-url="github.com">
+                                <i class="fa-solid fa-check"></i> Safe: GitHub.com
+                            </button>
+                            <button class="sim-chip safe" data-url="google.com">
+                                <i class="fa-solid fa-check"></i> Safe: Google.com
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Simulated Browser Window Container -->
+                    <div class="simulated-browser-window">
+                        <!-- Browser Window Top Control Bar -->
+                        <div class="sim-browser-bar">
+                            <div class="sim-window-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="sim-nav-controls">
+                                <button class="sim-nav-btn"><i class="fa-solid fa-arrow-left"></i></button>
+                                <button class="sim-nav-btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                <button class="sim-nav-btn" id="simRefreshBtn"><i class="fa-solid fa-rotate-right"></i></button>
+                            </div>
+                            <div class="sim-address-bar">
+                                <i class="fa-solid fa-lock sim-lock-icon"></i>
+                                <input type="text" id="simAddressInput" value="paypal-security-login-update.com" placeholder="Type domain (e.g. google.com) to simulate real-time browser pop verification...">
+                                <button id="simGoBtn" class="sim-go-btn"><i class="fa-solid fa-arrow-right"></i> Visit Site</button>
+                            </div>
+                        </div>
+
+                        <!-- Simulated Web Page Viewing Canvas -->
+                        <div class="sim-viewport" id="simViewport">
+                            
+                            <!-- Simulated Web Page Canvas Content -->
+                            <div class="sim-page-content" id="simPageContent">
+                                <div class="sim-mock-website-hero">
+                                    <div class="sim-hero-badge" id="simPageBadge"><i class="fa-solid fa-globe"></i> Web Page Live View</div>
+                                    <h2 id="simPageTitle">Loading Target Domain...</h2>
+                                    <p id="simPageSub">PhishGuard AI engine is evaluating domain features in background...</p>
+                                    <div class="sim-page-fake-form">
+                                        <div class="fake-input">Username / Email Address</div>
+                                        <div class="fake-input">Password</div>
+                                        <button class="fake-btn">Sign In</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- REAL-TIME IN-BROWSER POPUP VERIFICATION BADGE -->
+                            <div id="simulatedRealtimePopup" class="simulated-realtime-popup hidden">
+                                <div class="sim-popup-header">
+                                    <span class="sim-popup-badge" id="simPopupBadge">🛡️ SAFE</span>
+                                    <button class="sim-popup-close" id="simPopupCloseBtn">&times;</button>
+                                </div>
+                                <div class="sim-popup-title" id="simPopupTitle">PhishGuard Security Verdict</div>
+                                <div class="sim-popup-desc" id="simPopupDesc">Analyzing domain signals...</div>
+
+                                <div class="sim-popup-scores">
+                                    <div class="sim-score-item">
+                                        <label>BERT</label>
+                                        <span id="simBertScore">--%</span>
+                                    </div>
+                                    <div class="sim-score-item">
+                                        <label>GNN</label>
+                                        <span id="simGnnScore">--%</span>
+                                    </div>
+                                    <div class="sim-score-item">
+                                        <label>LightGBM</label>
+                                        <span id="simLgbScore">--%</span>
+                                    </div>
+                                </div>
+
+                                <div class="sim-popup-risk-row">
+                                    <span>Adaptive Risk Score</span>
+                                    <span id="simRiskScoreText">0 / 100</span>
+                                </div>
+                                <div class="sim-popup-bar-outer">
+                                    <div class="sim-popup-bar-inner" id="simRiskBarFill" style="width: 0%;"></div>
+                                </div>
+
+                                <div class="sim-popup-actions">
+                                    <button class="sim-pop-btn danger hidden" id="simLeaveBtn"><i class="fa-solid fa-triangle-exclamation"></i> Leave Page</button>
+                                    <button class="sim-pop-btn secondary" id="simDeepReportBtn"><i class="fa-solid fa-chart-pie"></i> Detailed Report</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- BROWSER EXTENSION INSTALLATION MODAL -->
+    <div id="extensionModal" class="modal-backdrop hidden">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-brands fa-chrome"></i> Install PhishGuard AI Extension</h3>
+                <button class="modal-close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Enable real-time background phishing verification across Chrome, Edge, Brave, or any Chromium browser!</p>
+
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-text">
+                        <strong>Open Browser Extensions Page</strong>
+                        <p>Open <code>chrome://extensions</code> or <code>edge://extensions</code> in a new tab.</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-text">
+                        <strong>Enable Developer Mode</strong>
+                        <p>Toggle on the <strong>Developer Mode</strong> switch located at the top right of the extensions page.</p>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-text">
+                        <strong>Load Unpacked Extension</strong>
+                        <p>Click <strong>Load unpacked</strong> button and select the extension folder:</p>
+                        <code class="path-code">C:\Users\sayam\OneDrive\Documents\PhishGuardAI\extension</code>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-text">
+                        <strong>Active Background Shield</strong>
+                        <p>PhishGuard AI will now automatically check visited pages in real-time and display security popups!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-close" id="closeModalFooterBtn">Got it, Thanks!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

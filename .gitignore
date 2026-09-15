@@ -1,0 +1,23 @@
+# Python & Byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# SQLite Database (optional - uncomment if you prefer empty database on GitHub)
+# backend/scan_history.db
+
+# IDE & OS Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Antigravity artifacts
+.gemini/
