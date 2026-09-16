@@ -38,6 +38,13 @@ DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "scan_history
 # Initialize Flask application serving root directory static files
 app = Flask(__name__, static_folder=BASE_DIR, static_url_path="")
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,DELETE,OPTIONS'
+    return response
+
 
 # =============================================================================
 # 1. DATABASE INITIALIZATION (SQLite)
