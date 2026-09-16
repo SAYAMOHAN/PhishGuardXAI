@@ -26,6 +26,10 @@ import datetime
 import numpy as np
 from urllib.parse import urlparse
 from flask import Flask, request, jsonify, render_template, send_from_directory
+try:
+    from backend.services.risk_engine import risk_engine
+except ImportError:
+    from services.risk_engine import risk_engine
 
 # Determine base directory paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -287,30 +291,14 @@ def predict_phishing(url, features):
             p_gnn = 0.91
             confidence = 97.5
 
-    # 2. Model Disagreement Index (MDI = Std(P_BERT, P_GNN, P_LightGBM))
-    model_probs = [p_bert, p_gnn, p_lgb]
-    mdi_val = float(np.std(model_probs))
+    # 2. Evaluate Adaptive Risk Assessment Engine (backend/services/risk_engine.py)
+    risk_eval = risk_engine.evaluate_risk(p_bert, p_lgb, p_gnn, features=features, is_whitelisted=is_whitelisted)
     
-    # 3. Adaptive Risk Assessment Formula (Conceptual PRS framework)
-    # PRS = w1(P_BERT) + w2(P_LightGBM) + w3(P_GNN) + w4(E) + w5(C) - w6(MDI)
-    # RiskScore = 100 * PRS
-    w1, w2, w3 = 0.35, 0.35, 0.30
-    prs_base = w1 * p_bert + w2 * p_lgb + w3 * p_gnn
-    risk_score = round(prs_base * 100, 1)
-
-    # 4-Tier Security Decision Mapping
-    if risk_score >= 80.0:
-        decision = "PHISHING"
-        verdict = "Phishing"
-    elif risk_score >= 55.0:
-        decision = "HIGH_RISK"
-        verdict = "High Risk"
-    elif risk_score >= 30.0:
-        decision = "SUSPICIOUS"
-        verdict = "Suspicious"
-    else:
-        decision = "SAFE"
-        verdict = "Safe"
+    mdi_val = risk_eval["mdi"]
+    risk_score = risk_eval["risk_score"]
+    decision = risk_eval["decision"]
+    verdict = risk_eval["verdict"]
+    confidence = risk_eval["confidence"]
 
     # Threat Intelligence Signals
     domain_age_days = 12 if decision in ["PHISHING", "HIGH_RISK"] else (365 if decision == "SUSPICIOUS" else 2450)
@@ -366,9 +354,11 @@ def predict_phishing(url, features):
         "shap_explanations": shap_features,
         "reasons": reasons,
         "adaptive_risk_assessment": {
-            "prs_conceptual": round(prs_base, 4),
-            "formula": "PRS = w1(P_BERT) + w2(P_LightGBM) + w3(P_GNN) + w4(E) + w5(C) - w6(MDI)",
-            "weights_status": "Conceptual research framework (weights subject to model tuning)"
+            "prs_conceptual": risk_eval["prs"],
+            "risk_level_explanation": risk_eval["explanation"],
+            "weights": risk_eval["weights"],
+            "formula": "PRS = w1(P_BERT) + w2(P_LightGBM) + w3(P_GNN) - w4(MDI)",
+            "weights_status": "Adaptive Risk Assessment Engine (backend/services/risk_engine.py)"
         }
     }
 
