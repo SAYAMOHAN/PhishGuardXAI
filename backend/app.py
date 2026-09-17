@@ -23,9 +23,12 @@ import json
 import pickle
 import sqlite3
 import datetime
+import warnings
 import numpy as np
+import pandas as pd
 from urllib.parse import urlparse
 from flask import Flask, request, jsonify, render_template, send_from_directory
+warnings.filterwarnings('ignore')
 try:
     from backend.services.risk_engine import risk_engine
 except ImportError:
@@ -272,8 +275,10 @@ def predict_phishing(url, features):
         confidence = 99.2
     elif trained_model is not None:
         try:
+            cols = ["URL_Length", "No_of_Dots", "No_of_Hyphens", "No_of_Digits", "Has_HTTPS", "No_of_Slashes", "No_of_Underscores", "No_of_QuestionMarks", "No_of_EqualSigns", "No_of_At", "Has_IP"] if model_feature_format == "github_11" else ["URL_Length", "No_of_Dots", "No_of_Hyphens", "No_of_Digits", "Has_HTTPS", "No_of_Slashes", "No_of_Underscores", "No_of_QuestionMarks", "No_of_EqualSigns", "No_of_At", "Has_IP", "Domain_Length", "Subdomain_Count", "Path_Length", "Query_Length", "Fragment_Length", "Path_Depth", "Digit_Ratio", "Special_Character_Count", "Suspicious_Keyword_Count", "Shortening_Service", "Punycode_Indicator", "Port_Presence", "Double_Slash_Redirect", "WWW_Indicator", "IP_Address_Indicator", "URL_Entropy"]
             input_vector = github_11_features if model_feature_format == "github_11" else notebook_27_features
-            proba = trained_model.predict_proba([input_vector])[0]
+            df_input = pd.DataFrame([input_vector], columns=cols)
+            proba = trained_model.predict_proba(df_input)[0]
             p_lgb = float(proba[1])
             
             # Contextual outputs for BERT & DOM-GNN centered on inference features
@@ -363,7 +368,7 @@ def predict_phishing(url, features):
         "adaptive_risk_assessment": {
             "prs_conceptual": risk_eval["prs"],
             "risk_level_explanation": risk_eval["explanation"],
-            "weights": risk_eval["weights"],
+            "weights": risk_eval.get("weights", {"w_bert": 0.35, "w_lgbm": 0.35, "w_gnn": 0.30}),
             "formula": "PRS = w1(P_BERT) + w2(P_LightGBM) + w3(P_GNN) - w4(MDI)",
             "weights_status": "Adaptive Risk Assessment Engine (backend/services/risk_engine.py)"
         }
@@ -501,4 +506,4 @@ if __name__ == '__main__':
     print(" [Server] Running at: http://127.0.0.1:5000")
     print(" [Database] SQLite DB Path: " + DB_PATH)
     print("=" * 70)
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=False, use_reloader=False)

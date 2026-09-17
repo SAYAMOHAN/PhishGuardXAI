@@ -46,7 +46,12 @@ class AdaptiveRiskEngine:
                 "verdict": "Safe",
                 "mdi": 0.0047,
                 "confidence": 99.2,
-                "explanation": "Verified trusted domain with valid HTTPS certificate."
+                "explanation": "Verified trusted domain with valid HTTPS certificate.",
+                "weights": {
+                    "w_bert": self.w_bert,
+                    "w_lgbm": self.w_lgbm,
+                    "w_gnn": self.w_gnn
+                }
             }
 
         # Calculate MDI

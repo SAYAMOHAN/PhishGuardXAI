@@ -655,6 +655,8 @@ async function analyzeAndPopulateResult(targetUrl) {
         gnnPredPill.textContent = gnnPct >= 50 ? 'Phishing' : 'Safe';
     }
 
+    if (lgbProbVal) lgbProbVal.textContent = `${lgbPct}%`;
+    if (lgbProgressFill) lgbProgressFill.style.width = `${lgbPct}%`;
     if (lgbPredPill) {
         lgbPredPill.className = `model-pred-pill ${lgbPct >= 50 ? 'badge-phishing' : 'badge-safe'}`;
         lgbPredPill.textContent = lgbPct >= 50 ? 'Phishing' : 'Safe';
