@@ -62,16 +62,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderVerdict(data) {
-        const decision = data.decision || {};
-        const level = (decision.level || "SAFE").toUpperCase();
-        const score = decision.risk_score || 0;
+        let rawDecision = data.decision || data.verdict || "SAFE";
+        let level = "SAFE";
+        if (typeof rawDecision === 'string') {
+            level = rawDecision;
+        } else if (rawDecision && rawDecision.level) {
+            level = rawDecision.level;
+        }
+        level = level.replace(/_/g, ' ').toUpperCase();
+
+        const score = typeof data.risk_score === 'number' ? data.risk_score : (typeof rawDecision === 'object' && rawDecision.risk_score ? rawDecision.risk_score : 0);
         const colorClass = level.replace(/\s+/g, '-').toLowerCase();
 
         verdictCard.className = `verdict-card ${colorClass}`;
         
         const badgeIcon = level === "PHISHING" ? "⛔" : level === "HIGH RISK" ? "🚨" : level === "SUSPICIOUS" ? "⚠️" : "🛡️";
         verdictBadge.textContent = `${badgeIcon} ${level}`;
-        verdictTitle.textContent = decision.title || `${level} Web Domain`;
+        verdictTitle.textContent = typeof rawDecision === 'object' && rawDecision.title ? rawDecision.title : `${level} Web Domain`;
         verdictSub.textContent = data.adaptive_risk_assessment ? data.adaptive_risk_assessment.risk_level_explanation : (decision.recommendation || "Evaluation complete.");
 
         scoreBert.textContent = `${Math.round((data.bert_probability || 0) * 100)}%`;

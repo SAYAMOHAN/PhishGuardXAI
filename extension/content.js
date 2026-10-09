@@ -18,9 +18,16 @@
         const existing = document.getElementById("phishguard-alert-banner");
         if (existing) existing.remove();
 
-        const decision = data.decision || {};
-        const level = (decision.level || "SAFE").toUpperCase();
-        const riskScore = decision.risk_score || 0;
+        let rawDecision = data.decision || data.verdict || "SAFE";
+        let level = "SAFE";
+        if (typeof rawDecision === 'string') {
+            level = rawDecision;
+        } else if (rawDecision && rawDecision.level) {
+            level = rawDecision.level;
+        }
+        level = level.replace(/_/g, ' ').toUpperCase();
+
+        const riskScore = typeof data.risk_score === 'number' ? data.risk_score : (typeof rawDecision === 'object' && rawDecision.risk_score ? rawDecision.risk_score : 0);
         const colorClass = level.replace(/\s+/g, '-').toLowerCase();
 
         // Create alert container

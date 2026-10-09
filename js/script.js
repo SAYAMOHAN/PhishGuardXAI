@@ -1245,9 +1245,16 @@ async function runSimulatedScan(targetUrl) {
         const response = await fetch(`${apiEndpoint}?url=${encodeURIComponent(targetUrl)}&source=Extension`);
         const data = await response.json();
 
-        const decision = data.decision || {};
-        const level = (decision.level || "SAFE").toUpperCase();
-        const score = decision.risk_score || 0;
+        let rawDecision = data.decision || data.verdict || "SAFE";
+        let level = "SAFE";
+        if (typeof rawDecision === 'string') {
+            level = rawDecision;
+        } else if (rawDecision && rawDecision.level) {
+            level = rawDecision.level;
+        }
+        level = level.replace(/_/g, ' ').toUpperCase();
+
+        const score = typeof data.risk_score === 'number' ? data.risk_score : (typeof rawDecision === 'object' && rawDecision.risk_score ? rawDecision.risk_score : 0);
         const colorClass = level.replace(/\s+/g, '-').toLowerCase();
 
         const isThreat = level === 'PHISHING' || level === 'HIGH RISK' || level === 'SUSPICIOUS';

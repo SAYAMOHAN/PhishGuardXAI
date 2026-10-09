@@ -268,7 +268,7 @@ def predict_phishing(url, features):
 
     # 1. Trusted Global Domain Whitelist Override
     is_whitelisted = any(parsed_domain == dom or parsed_domain.endswith('.' + dom) for dom in TRUSTED_DOMAINS)
-    if is_whitelisted and features["Has_HTTPS"] == 1 and features["Suspicious_Keyword_Count"] == 0:
+    if is_whitelisted and features["Has_HTTPS"] == 1:
         p_lgb = 0.02
         p_bert = 0.03
         p_gnn = 0.02
@@ -279,7 +279,7 @@ def predict_phishing(url, features):
             input_vector = github_11_features if model_feature_format == "github_11" else notebook_27_features
             df_input = pd.DataFrame([input_vector], columns=cols)
             proba = trained_model.predict_proba(df_input)[0]
-            p_lgb = float(proba[1])
+            p_lgb = float(proba[0])
             
             # Contextual outputs for BERT & DOM-GNN centered on inference features
             seed_val = sum(ord(c) for c in parsed_domain) % 10000
