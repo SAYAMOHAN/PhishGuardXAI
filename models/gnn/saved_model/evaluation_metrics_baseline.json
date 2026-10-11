@@ -1,0 +1,30 @@
+{
+  "model": "URL GCN",
+  "seed": 42,
+  "nodes": 99814,
+  "directed_edges_before_split_filter": 96466,
+  "train_nodes": 64424,
+  "validation_nodes": 14072,
+  "test_nodes": 21318,
+  "train_unique_hostnames": 33011,
+  "validation_unique_hostnames": 8253,
+  "test_unique_hostnames": 10317,
+  "best_epoch": 18,
+  "best_validation_f1": 0.48038647342995167,
+  "test_accuracy": 0.8438877943521906,
+  "test_precision": 0.7852658015906236,
+  "test_recall": 0.39991473033468344,
+  "test_f1": 0.5299435028248588,
+  "test_roc_auc": 0.7388227639851489,
+  "test_confusion_matrix": [
+    [
+      16114,
+      513
+    ],
+    [
+      2815,
+      1876
+    ]
+  ],
+  "note": "Experimental URL GCN; hostname-grouped split; edges crossing splits removed; CPU training."
+}

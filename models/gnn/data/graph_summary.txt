@@ -1,0 +1,11 @@
+PhishGuard AI URL graph
+Dataset: phishing_dataset.csv.csv
+Random seed: 42
+Maximum rows configured: 100000
+Nodes: 99814
+Directed edges: 96466
+Unique hostnames: 51581
+Legitimate nodes (good=0): 77525
+Phishing nodes (bad=1): 22289
+Edge rule: adjacent URLs sharing an identical hostname
+Labels are not used to construct edges.
