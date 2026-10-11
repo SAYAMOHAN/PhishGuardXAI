@@ -1,0 +1,35 @@
+Feature,Description,Type,Source,Expected_Format
+URL_Length,Length of the complete URL,Numeric,URL,Integer
+No_of_Dots,Number of dots in the URL,Numeric,URL,Integer
+No_of_Hyphens,Number of hyphens in the URL,Numeric,URL,Integer
+No_of_Digits,Number of digits in the URL,Numeric,URL,Integer
+Has_HTTPS,Whether the URL uses HTTPS,Binary,URL,0/1
+No_of_Slashes,Number of slash characters in the URL,Numeric,URL,Integer
+No_of_Underscores,Number of underscore characters,Numeric,URL,Integer
+No_of_QuestionMarks,Number of question marks,Numeric,URL,Integer
+No_of_EqualSigns,Number of equal signs,Numeric,URL,Integer
+No_of_At,Number of @ symbols,Numeric,URL,Integer
+Has_IP,Whether the URL contains an IP address instead of a normal domain,Binary,URL,0/1
+Domain_Length,Length of the domain name,Numeric,URL,Integer
+Subdomain_Count,Number of subdomains,Numeric,URL,Integer
+Path_Length,Length of the URL path,Numeric,URL,Integer
+Query_Length,Length of the query string,Numeric,URL,Integer
+Fragment_Length,Length of the URL fragment,Numeric,URL,Integer
+Path_Depth,Number of directory levels in the URL path,Numeric,URL,Integer
+Digit_Ratio,Ratio of digits to total URL characters,Numeric,URL,Float
+Special_Character_Count,Number of special characters in the URL,Numeric,URL,Integer
+Suspicious_Keyword_Count,Number of suspicious/phishing-related keywords,Numeric,URL,Integer
+Shortening_Service,Whether a known URL-shortening service is detected,Binary,URL,0/1
+Punycode_Indicator,Whether the domain contains punycode,Binary,URL,0/1
+Port_Presence,Whether a non-standard port is specified,Binary,URL,0/1
+Double_Slash_Redirect,Whether a suspicious double-slash pattern occurs,Binary,URL,0/1
+WWW_Indicator,Whether www is present in the hostname,Binary,URL,0/1
+URL_Entropy,Character entropy of the URL,Numeric,URL,Float
+Domain_Age_Days,Age of the domain in days based on registration information,Numeric,WHOIS,Integer
+WHOIS_Available,Whether WHOIS information could be retrieved,Binary,WHOIS,0/1
+SSL_Valid,Whether the SSL/TLS certificate is currently valid,Binary,SSL/TLS,0/1
+SSL_Days_To_Expiry,Number of days remaining before the SSL/TLS certificate expires,Numeric,SSL/TLS,Integer
+DNS_A_Record,Whether an IPv4 A record can be resolved,Binary,DNS,0/1
+DNS_MX_Record,Whether an MX mail-server record can be resolved,Binary,DNS,0/1
+Blacklist_Hit,Whether the domain is found on a configured blacklist,Binary,Blacklist,0/1
+Reputation_Score,Reputation/risk score obtained from a configured threat-intelligence source,Numeric,Reputation,Float

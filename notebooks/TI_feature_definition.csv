@@ -1,0 +1,9 @@
+Feature,Description,Source,Type,Interpretation
+Domain_Age_Days,Number of days since the domain was registered,WHOIS,Numeric,Older/newer domain age signal
+WHOIS_Available,Indicates whether WHOIS information could be retrieved,WHOIS,Binary,0 or 1
+SSL_Valid,Indicates whether the SSL/TLS certificate is currently valid,SSL/TLS,Binary,0 or 1
+SSL_Days_To_Expiry,Number of days remaining before the SSL/TLS certificate expires,SSL/TLS,Numeric,Number of days
+DNS_A_Record,Indicates whether the domain resolves to an IPv4 address,DNS,Binary,0 or 1
+DNS_MX_Record,Indicates whether an MX mail-server record exists,DNS,Binary,0 or 1
+Blacklist_Hit,Indicates whether the domain is found on a configured blacklist,Blacklist,Binary,0 or 1
+Reputation_Score,Risk/reputation score obtained from a configured threat-intelligence source,Reputation service,Numeric,Source-dependent score

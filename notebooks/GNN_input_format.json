@@ -1,0 +1,16 @@
+{
+    "input_source": "URL",
+    "input_type": "Graph",
+    "nodes": [
+        "URL",
+        "Domain",
+        "Path components"
+    ],
+    "edges": [
+        "URL -> Domain",
+        "URL -> Path",
+        "Path component -> Next path component"
+    ],
+    "node_features": "Can be extended using the finalized URL/threat-intelligence features",
+    "output": "GNN embedding / phishing probability"
+}

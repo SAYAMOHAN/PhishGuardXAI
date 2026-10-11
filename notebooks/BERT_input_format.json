@@ -1,0 +1,11 @@
+{
+    "input_source": "Raw URL",
+    "input_type": "Text",
+    "example": "http://example.com/login/verify/account",
+    "preprocessing": "BERT tokenizer",
+    "model_inputs": [
+        "input_ids",
+        "attention_mask"
+    ],
+    "output": "BERT embedding / phishing probability"
+}
