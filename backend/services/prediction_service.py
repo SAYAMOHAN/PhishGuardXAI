@@ -3,7 +3,6 @@ import sys
 import joblib
 import pandas as pd
 
-
 # --------------------------------------------------
 # Allow access to project root and backend files
 # --------------------------------------------------
@@ -14,13 +13,20 @@ BASE_DIR = os.path.dirname(
     )
 )
 
-PROJECT_DIR = os.path.dirname(BASE_DIR)
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
 
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
-if PROJECT_DIR not in sys.path:
-    sys.path.insert(0, PROJECT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+
+# --------------------------------------------------
+# Import the inference bridge
+# --------------------------------------------------
+
+from model_inference_bridge import predict_with_bert_gnn
 
 
 # --------------------------------------------------
@@ -69,13 +75,17 @@ print(
 
 def predict_url(url):
 
+    if not isinstance(url, str) or not url.strip():
+        raise ValueError("URL must be a non-empty string")
+
+    url = url.strip()
+
     # ----------------------------------------------
     # 1. Extract features
     # ----------------------------------------------
 
     features = extract_features(url)
 
-    # Keep exact feature order
     feature_values = [
         features[name]
         for name in FEATURE_NAMES
@@ -93,27 +103,17 @@ def predict_url(url):
 
     probabilities = model.predict_proba(X)[0]
 
-    phishing_probability = float(
-        probabilities[1]
+    phishing_probability = float(probabilities[1])
+
+    prediction_value = int(model.predict(X)[0])
+
+    prediction = (
+        "PHISHING" if prediction_value == 1 else "SAFE"
     )
 
-    prediction_value = int(
-        model.predict(X)[0]
-    )
-
 
     # ----------------------------------------------
-    # 3. Prediction label
-    # ----------------------------------------------
-
-    if prediction_value == 1:
-        prediction = "PHISHING"
-    else:
-        prediction = "SAFE"
-
-
-    # ----------------------------------------------
-    # 4. Confidence
+    # 3. Confidence
     # ----------------------------------------------
 
     confidence = (
@@ -122,73 +122,48 @@ def predict_url(url):
         else (1 - phishing_probability) * 100
     )
 
-    # Convert confidence to 0-1 scale
     confidence_normalized = confidence / 100
 
 
     # ----------------------------------------------
-    # 5. Original LightGBM risk score
+    # 4. SHAP explanation and evidence
     # ----------------------------------------------
 
-    lightgbm_risk_score = round(
-        phishing_probability * 100
+    explanation = explain_prediction(features)
+
+    shap_evidence = calculate_shap_evidence(features)
+
+
+    # ----------------------------------------------
+    # 5. Real BERT and GNN inference
+    # ----------------------------------------------
+
+    # Raises an error if either model fails.
+    # Do not silently substitute LightGBM probabilities.
+
+    model_outputs = predict_with_bert_gnn(url)
+
+    bert_probability = float(
+        model_outputs["bert_probability"]
     )
 
-
-    # ----------------------------------------------
-    # 6. Original LightGBM risk level
-    # ----------------------------------------------
-
-    if lightgbm_risk_score >= 75:
-
-        risk_level = "CRITICAL"
-
-    elif lightgbm_risk_score >= 50:
-
-        risk_level = "HIGH"
-
-    elif lightgbm_risk_score >= 25:
-
-        risk_level = "MEDIUM"
-
-    else:
-
-        risk_level = "LOW"
-
-
-    # ----------------------------------------------
-    # 7. SHAP explanation
-    # ----------------------------------------------
-
-    explanation = explain_prediction(
-        features
+    gnn_probability = float(
+        model_outputs["gnn_probability"]
     )
 
-
-    # ----------------------------------------------
-    # 8. SHAP evidence
-    # ----------------------------------------------
-
-    shap_evidence = calculate_shap_evidence(
-        features
-    )
-
-
-    # ----------------------------------------------
-    # 9. Adaptive Risk Engine
-    # ----------------------------------------------
-
-    # TEMPORARY:
-    # BERT and GNN probabilities will be replaced
-    # with actual model outputs during final integration.
-
-    bert_probability = phishing_probability
-
-    gnn_probability = phishing_probability
+    for name, probability in (
+        ("BERT", bert_probability),
+        ("GNN", gnn_probability),
+        ("LightGBM", phishing_probability),
+    ):
+        if not 0.0 <= probability <= 1.0:
+            raise ValueError(
+                f"{name} returned an invalid probability"
+            )
 
 
     # ----------------------------------------------
-    # 9A. Model disagreement
+    # 6. Model disagreement
     # ----------------------------------------------
 
     model_disagreement = calculate_model_disagreement(
@@ -199,7 +174,7 @@ def predict_url(url):
 
 
     # ----------------------------------------------
-    # 9B. Adaptive Risk Score
+    # 7. Adaptive risk score
     # ----------------------------------------------
 
     adaptive_risk_score = calculate_risk_score(
@@ -213,7 +188,7 @@ def predict_url(url):
 
 
     # ----------------------------------------------
-    # 9C. Adaptive Risk Level
+    # 8. Adaptive risk level
     # ----------------------------------------------
 
     adaptive_risk_level = determine_risk_level(
@@ -224,34 +199,21 @@ def predict_url(url):
 
 
     # ----------------------------------------------
-    # 10. Prepare result
+    # 9. Prepare result
     # ----------------------------------------------
 
     return {
-
         "url": url,
-
         "prediction": prediction,
-
         "probability": phishing_probability,
-
         "lightgbm_probability": phishing_probability,
-
+        "bert_probability": bert_probability,
+        "gnn_probability": gnn_probability,
         "confidence": confidence,
-
         "confidence_normalized": confidence_normalized,
-
-        "risk_score": round(
-            adaptive_risk_score,
-            2
-        ),
-
+        "risk_score": round(adaptive_risk_score, 2),
         "risk_level": adaptive_risk_level,
-
         "shap_evidence": shap_evidence,
-
         "model_disagreement": model_disagreement,
-
         "explanation": explanation
-
     }
