@@ -11,19 +11,12 @@ from dotenv import load_dotenv
 # --------------------------------------------------
 
 BASE_DIR = os.path.dirname(
-    os.path.dirname(
-        os.path.abspath(__file__)
-    )
+    os.path.dirname(os.path.abspath(__file__))
 )
 
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 
-load_dotenv(
-    os.path.join(
-        PROJECT_DIR,
-        ".env"
-    )
-)
+load_dotenv(os.path.join(PROJECT_DIR, ".env"))
 
 
 # --------------------------------------------------
@@ -31,7 +24,6 @@ load_dotenv(
 # --------------------------------------------------
 
 def get_connection():
-
     return psycopg2.connect(
         host=os.getenv("DB_HOST", "localhost"),
         port=os.getenv("DB_PORT", "5432"),
@@ -56,67 +48,67 @@ def save_scan(
     shap_evidence=None,
     model_disagreement=None
 ):
+    conn = None
+    cursor = None
 
-    conn = get_connection()
-    cursor = conn.cursor()
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
 
-    query = """
-        INSERT INTO "ScanHistory"
-        (
-            url,
-            prediction,
-            probability,
-            confidence,
-            risk_score,
-            risk_level,
-            threat_intelligence,
-            shap_evidence,
-            model_disagreement,
-            scan_time
+        query = """
+            INSERT INTO "ScanHistory"
+            (
+                url,
+                prediction,
+                probability,
+                confidence,
+                risk_score,
+                risk_level,
+                threat_intelligence,
+                shap_evidence,
+                model_disagreement,
+                scan_time
+            )
+            VALUES (
+                %s, %s, %s, %s, %s,
+                %s, %s, %s, %s, CURRENT_TIMESTAMP
+            )
+            RETURNING id;
+        """
+
+        cursor.execute(
+            query,
+            (
+                url,
+                prediction,
+                probability,
+                confidence,
+                risk_score,
+                risk_level,
+                psycopg2.extras.Json(threat_intelligence)
+                if threat_intelligence is not None
+                else None,
+                shap_evidence,
+                model_disagreement
+            )
         )
-        VALUES (
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            CURRENT_TIMESTAMP
-        )
-        RETURNING id;
-    """
 
-    cursor.execute(
-        query,
-        (
-            url,
-            prediction,
-            probability,
-            confidence,
-            risk_score,
-            risk_level,
+        scan_id = cursor.fetchone()[0]
+        conn.commit()
 
-            psycopg2.extras.Json(threat_intelligence)
-            if threat_intelligence is not None
-            else None,
+        return scan_id
 
-            shap_evidence,
+    except Exception:
+        if conn is not None:
+            conn.rollback()
+        raise
 
-            model_disagreement
-        )
-    )
+    finally:
+        if cursor is not None:
+            cursor.close()
 
-    scan_id = cursor.fetchone()[0]
-
-    conn.commit()
-
-    cursor.close()
-    conn.close()
-
-    return scan_id
+        if conn is not None:
+            conn.close()
 
 
 # --------------------------------------------------
@@ -124,35 +116,41 @@ def save_scan(
 # --------------------------------------------------
 
 def get_history():
+    conn = None
+    cursor = None
 
-    conn = get_connection()
-    cursor = conn.cursor()
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
 
-    query = """
-        SELECT
-            id,
-            url,
-            prediction,
-            probability,
-            confidence,
-            risk_score,
-            risk_level,
-            threat_intelligence,
-            shap_evidence,
-            model_disagreement,
-            scan_time
-        FROM "ScanHistory"
-        ORDER BY scan_time DESC;
-    """
+        query = """
+            SELECT
+                id,
+                url,
+                prediction,
+                probability,
+                confidence,
+                risk_score,
+                risk_level,
+                threat_intelligence,
+                shap_evidence,
+                model_disagreement,
+                scan_time
+            FROM "ScanHistory"
+            ORDER BY scan_time DESC;
+        """
 
-    cursor.execute(query)
+        cursor.execute(query)
+        rows = cursor.fetchall()
 
-    rows = cursor.fetchall()
+        return rows
 
-    cursor.close()
-    conn.close()
+    finally:
+        if cursor is not None:
+            cursor.close()
 
-    return rows
+        if conn is not None:
+            conn.close()
 
 
 # --------------------------------------------------
@@ -160,7 +158,6 @@ def get_history():
 # --------------------------------------------------
 
 if __name__ == "__main__":
-
     scan_id = save_scan(
         url="https://example.com",
         prediction="SAFE",
@@ -168,29 +165,22 @@ if __name__ == "__main__":
         confidence=95.0,
         risk_score=5,
         risk_level="LOW",
-
         threat_intelligence={
             "is_malicious": False,
             "sources": [],
             "message": "Test threat intelligence result"
         },
-
         shap_evidence=0.10,
-
         model_disagreement=0.02
     )
 
     print("Scan saved successfully!")
-
-    print(
-        "Scan ID:",
-        scan_id
-    )
+    print("Scan ID:", scan_id)
 
     history = get_history()
 
     print("\nScan History:")
 
     for row in history:
-
         print(row)
+
